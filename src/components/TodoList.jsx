@@ -3,21 +3,21 @@ import { TodoContext } from '../contexts/TodoProvider';
 
 const TodoList = () => {
   const [message, setMessage] = useState('');
-  const [todos] = useContext(TodoContext);
+  const [state] = useContext(TodoContext);
 
   useEffect(() => {
-    if (todos.length) {
+    if (state.todos.length) {
       setMessage('NEW MESSAGE !');
       setTimeout(() => setMessage(''), 2000);
     }
-  }, [todos]);
+  }, [state.todos]);
 
   return (
     <div>
       <p>{ message }</p>
 
       <ul>
-        { todos.map((todo) => <li>{ todo }</li>) }
+        { state.todos.map((todo) => <li>{ todo }</li>) }
       </ul>
     </div>
   );

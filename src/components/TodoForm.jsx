@@ -1,13 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { TodoContext } from '../contexts/TodoProvider';
+import { ADD_TODO } from '../reducers/todoReducer';
 
 const TodoForm = () => {
   const [value, setValue] = useState('');
-  const [todos, setTodos] = useContext(TodoContext);
+  const [state, dispatch] = useContext(TodoContext);
 
   const addTodo = (e) => {
     e.preventDefault();
-    setTodos([...todos, value]);
+    dispatch({
+      type: ADD_TODO,
+      payload: value,
+    });
+
     setValue('');
   };
 

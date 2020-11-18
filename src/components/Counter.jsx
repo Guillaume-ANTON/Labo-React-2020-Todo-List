@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { TodoContext } from '../contexts/TodoProvider';
 
 const Counter = () => {
-  const [todos] = useContext(TodoContext);
+  const [state] = useContext(TodoContext);
 
   return (
     <div>
-      {`Nombre de todos : ${todos.length}`}
+      {`Nombre de todos : ${state.todos.length}`}
     </div>
   );
 };
