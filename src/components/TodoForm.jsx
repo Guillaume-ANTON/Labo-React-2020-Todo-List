@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
-import TodoList from './TodoList';
+import React, { useContext, useState } from 'react';
+import { TodoContext } from '../contexts/TodoProvider';
 
 const TodoForm = () => {
   const [value, setValue] = useState('');
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useContext(TodoContext);
 
-  const addTodo = () => {
+  const addTodo = (e) => {
+    e.preventDefault();
     setTodos([...todos, value]);
     setValue('');
   };
 
   return (
-    <div>
+    <form onSubmit={addTodo}>
       <input type="text" value={value} onChange={(e) => setValue(e.target.value)} />
 
-      <button type="button" onClick={addTodo}>
+      <button type="submit">
         Ajouter
       </button>
-
-      <TodoList list={todos} status={false} test="test" />
-    </div>
+    </form>
   );
 };
 

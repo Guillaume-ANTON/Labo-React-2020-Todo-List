@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { TodoContext } from '../contexts/TodoProvider';
 
-const TodoList = (props) => {
+const TodoList = () => {
   const [message, setMessage] = useState('');
-  const { list } = props;
+  const [todos] = useContext(TodoContext);
 
   useEffect(() => {
-    if (list.length) {
+    if (todos.length) {
       setMessage('NEW MESSAGE !');
       setTimeout(() => setMessage(''), 2000);
     }
-  }, [list]);
+  }, [todos]);
 
   return (
     <div>
       <p>{ message }</p>
 
       <ul>
-        { list.map((todo) => <li>{ todo }</li>) }
+        { todos.map((todo) => <li>{ todo }</li>) }
       </ul>
     </div>
   );
