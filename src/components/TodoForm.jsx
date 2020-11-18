@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TodoList from './TodoList';
 
 const TodoForm = () => {
   const [value, setValue] = useState('');
@@ -17,9 +18,7 @@ const TodoForm = () => {
         Ajouter
       </button>
 
-      <ul>
-        { todos.map((todo) => <li>{ todo }</li>) }
-      </ul>
+      <TodoList list={todos} status={false} test="test" />
     </div>
   );
 };
