@@ -5,7 +5,6 @@ export const REMOVE_TODO = 'REMOVE_TODO';
 export const SWITCH_TODO_STATE = 'SWITCH_TODO_STATE';
 
 export const initialTodoState = {
-  isLoaded: false,
   todos: [
     {
       id: generateTodoId([]),
@@ -15,38 +14,22 @@ export const initialTodoState = {
   ],
 };
 
-export const todoReducer = (state, action) => {
+export const todoReducer = (state = initialTodoState, action) => {
   switch (action.type) {
     case ADD_TODO:
       return {
         ...state,
-        todos: [
-          ...state.todos,
-          {
-            id: generateTodoId(state.todos),
-            name: action.payload,
-            isComplete: false,
-          },
-        ],
+        todos: action.payload,
       };
     case REMOVE_TODO:
       return {
         ...state,
-        todos: state.todos.filter(todo => todo.id !== action.payload),
+        todos: action.payload,
       };
     case SWITCH_TODO_STATE:
       return {
         ...state,
-        todos: state.todos.map((todo) => {
-          if (todo.id === action.payload) {
-            return {
-              ...todo,
-              isComplete: !todo.isComplete,
-            };
-          }
-
-          return todo;
-        }),
+        todos: action.payload,
       };
     default:
       return state;

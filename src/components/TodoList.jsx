@@ -1,43 +1,40 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeTodo, switchTodoState } from '../actions/todoActions';
 import { TodoContext } from '../contexts/TodoProvider';
 import { REMOVE_TODO, SWITCH_TODO_STATE } from '../reducers/todoReducer';
 
 const TodoList = () => {
   const [message, setMessage] = useState('');
-  const [state, dispatch] = useContext(TodoContext);
+  const { todos } = useSelector(state => state.todoReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (state.todos.length) {
+    if (todos.length) {
       setMessage('TODO HAS CHANGED !');
       setTimeout(() => setMessage(''), 2000);
     }
-  }, [state.todos]);
+  }, [todos]);
 
-  const removeTodo = (todoId) => {
-    dispatch({
-      type: REMOVE_TODO,
-      payload: todoId,
-    });
+  const handleRemoveTodo = (todoId) => {
+    dispatch(removeTodo(todoId));
   };
 
-  const switchTodoState = (todoId) => {
-    dispatch({
-      type: SWITCH_TODO_STATE,
-      payload: todoId,
-    });
+  const handleSwitchTodoState = (todoId) => {
+    dispatch(switchTodoState(todoId));
   };
 
   return (
     <div>
       <ul>
         {
-          state.todos.map((todo) => (
+          todos.map((todo) => (
             <li key={todo.id} style={{ color: todo.isComplete ? 'grey' : 'black' }}>
-              <input type="checkbox" onChange={() => switchTodoState(todo.id)} />
+              <input type="checkbox" onChange={() => handleSwitchTodoState(todo.id)} />
 
               { todo.name }
 
-              <button type="button" onClick={() => removeTodo(todo.id)}>
+              <button type="button" onClick={() => handleRemoveTodo(todo.id)}>
                 REMOVE
               </button>
             </li>

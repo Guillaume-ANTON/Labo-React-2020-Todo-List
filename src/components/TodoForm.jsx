@@ -1,23 +1,21 @@
 import React, { useContext, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../actions/todoActions';
 import { TodoContext } from '../contexts/TodoProvider';
 import { ADD_TODO } from '../reducers/todoReducer';
 
 const TodoForm = () => {
   const [value, setValue] = useState('');
-  const [state, dispatch] = useContext(TodoContext);
+  const dispatch = useDispatch();
 
-  const addTodo = (e) => {
+  const handleAddTodo = (e) => {
     e.preventDefault();
-    dispatch({
-      type: ADD_TODO,
-      payload: value,
-    });
-
+    dispatch(addTodo(value));
     setValue('');
   };
 
   return (
-    <form onSubmit={addTodo}>
+    <form onSubmit={handleAddTodo}>
       <input type="text" value={value} onChange={(e) => setValue(e.target.value)} />
 
       <button type="submit">
