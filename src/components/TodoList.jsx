@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { TodoContext } from '../contexts/TodoProvider';
-import { REMOVE_TODO } from '../reducers/todoReducer';
+import { REMOVE_TODO, SWITCH_TODO_STATE } from '../reducers/todoReducer';
 
 const TodoList = () => {
   const [message, setMessage] = useState('');
@@ -13,24 +13,31 @@ const TodoList = () => {
     }
   }, [state.todos]);
 
-  const removeTodo = (todo) => {
+  const removeTodo = (todoId) => {
     dispatch({
       type: REMOVE_TODO,
-      payload: todo,
+      payload: todoId,
+    });
+  };
+
+  const switchTodoState = (todoId) => {
+    dispatch({
+      type: SWITCH_TODO_STATE,
+      payload: todoId,
     });
   };
 
   return (
     <div>
-      <p>{ message }</p>
-
       <ul>
         {
           state.todos.map((todo) => (
-            <li>
-              { todo }
+            <li key={todo.id} style={{ color: todo.isComplete ? 'grey' : 'black' }}>
+              <input type="checkbox" onChange={() => switchTodoState(todo.id)} />
 
-              <button type="button" onClick={() => removeTodo(todo)}>
+              { todo.name }
+
+              <button type="button" onClick={() => removeTodo(todo.id)}>
                 REMOVE
               </button>
             </li>
