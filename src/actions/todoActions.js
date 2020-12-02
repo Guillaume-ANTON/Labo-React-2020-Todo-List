@@ -3,6 +3,7 @@ import { ADD_TODO, REMOVE_TODO, SWITCH_TODO_STATE } from '../reducers/todoReduce
 
 export const addTodo = (todoName) => (dispatch, getState) => {
   const existingTodos = getState().todoReducer.todos;
+
   dispatch({
     type: ADD_TODO,
     payload: [

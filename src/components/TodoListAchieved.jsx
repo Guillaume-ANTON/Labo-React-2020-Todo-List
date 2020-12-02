@@ -1,20 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeTodo, switchTodoState } from '../actions/todoActions';
-import { TodoContext } from '../contexts/TodoProvider';
-import { REMOVE_TODO, SWITCH_TODO_STATE } from '../reducers/todoReducer';
 
-const TodoList = () => {
-  const [message, setMessage] = useState('');
+const TodoListAchieved = () => {
   const { todos } = useSelector(state => state.todoReducer);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (todos.length) {
-      setMessage('TODO HAS CHANGED !');
-      setTimeout(() => setMessage(''), 2000);
-    }
-  }, [todos]);
 
   const handleRemoveTodo = (todoId) => {
     dispatch(removeTodo(todoId));
@@ -28,9 +18,9 @@ const TodoList = () => {
     <div>
       <ul>
         {
-          todos.map((todo) => (!todo.isComplete ? (
+          todos.map((todo) => (todo.isComplete ? (
             <li key={todo.id} style={{ color: todo.isComplete ? 'grey' : 'black' }}>
-              <input type="checkbox" onChange={() => handleSwitchTodoState(todo.id)} />
+              <input type="checkbox" onChange={() => handleSwitchTodoState(todo.id)} checked />
 
               { todo.name }
 
@@ -45,4 +35,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default TodoListAchieved;
